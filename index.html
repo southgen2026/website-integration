@@ -99,10 +99,17 @@
     }
     .btn-navy::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--gold); }
     .btn-navy:hover { background: var(--navy-mid); box-shadow: 0 6px 24px rgba(13,31,78,0.35); }
-    .btn-gold {
-      padding: 15px 32px; background: var(--gold); color: var(--navy-deep);
+    @keyframes shine {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
     }
-    .btn-gold:hover { background: var(--gold-light); box-shadow: 0 6px 24px rgba(184,147,90,0.45); }
+    .btn-gold {
+      padding: 15px 32px; color: var(--navy-deep); position: relative; overflow: hidden;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 40%, #f0d090 50%, var(--gold-light) 60%, var(--gold) 100%);
+      background-size: 200% auto;
+      animation: shine 3s linear infinite;
+    }
+    .btn-gold:hover { box-shadow: 0 6px 28px rgba(184,147,90,0.55); animation-duration: 1.2s; }
     .btn-outline-cream {
       padding: 13px 30px; background: transparent; color: var(--cream);
       border: 2px solid rgba(242,234,216,0.4);
@@ -166,6 +173,25 @@
     #mobile-menu a:hover { color: var(--gold-light); }
 
     /* ============================================================ HERO */
+    @keyframes heroShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes floatOrb1 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.55; }
+      33%       { transform: translate(80px, -60px) scale(1.25); opacity: 0.85; }
+      66%       { transform: translate(-40px, 40px) scale(0.85); opacity: 0.6; }
+    }
+    @keyframes floatOrb2 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+      40%       { transform: translate(-100px, 60px) scale(1.3); opacity: 0.75; }
+      70%       { transform: translate(60px, -40px) scale(0.8); opacity: 0.45; }
+    }
+    @keyframes floatOrb3 {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+      50%       { transform: translate(60px, 80px) scale(1.4); opacity: 0.7; }
+    }
     #hero {
       min-height: 100vh;
       background: var(--navy-deep);
@@ -173,7 +199,30 @@
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background: linear-gradient(140deg, var(--navy-deep) 0%, #0F1A45 55%, #152354 100%);
+      background: linear-gradient(140deg, #080F2A 0%, #0D1F4E 40%, #162C6B 70%, #0A1530 100%);
+      background-size: 300% 300%;
+      animation: heroShift 6s ease infinite;
+    }
+    .hero-orb1 {
+      position: absolute; width: 700px; height: 700px; border-radius: 50%;
+      top: -150px; left: -100px;
+      background: radial-gradient(circle, rgba(30,60,140,0.9) 0%, transparent 65%);
+      animation: floatOrb1 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-orb2 {
+      position: absolute; width: 600px; height: 600px; border-radius: 50%;
+      bottom: -120px; right: -80px;
+      background: radial-gradient(circle, rgba(184,147,90,0.22) 0%, transparent 60%);
+      animation: floatOrb2 9s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-orb3 {
+      position: absolute; width: 400px; height: 400px; border-radius: 50%;
+      top: 40%; left: 55%;
+      background: radial-gradient(circle, rgba(30,56,180,0.65) 0%, transparent 65%);
+      animation: floatOrb3 5s ease-in-out infinite;
+      pointer-events: none;
     }
     /* Warm parchment glow from bottom-right */
     .hero-glow {
@@ -188,12 +237,7 @@
       opacity: 0.4; pointer-events: none;
     }
     /* Vertical accent line echoing logo G-bar */
-    .hero-line {
-      position: absolute; top: 0; right: 18%;
-      width: 1px; height: 100%;
-      background: linear-gradient(to bottom, var(--gold) 0%, transparent 60%);
-      opacity: 0.18; pointer-events: none;
-    }
+
     .hero-content {
       position: relative; z-index: 1;
       padding: 140px 0 120px;
@@ -527,7 +571,7 @@
     }
 
     /* ============================================================ WHY US */
-    #why { padding: 112px 0; background: var(--navy-deep); position: relative; overflow: hidden; }
+    #why { padding: 112px 0; background: #0B1740; position: relative; overflow: hidden; }
     .why-bg-glow {
       position: absolute; top: -100px; right: -100px;
       width: 500px; height: 500px; border-radius: 50%;
@@ -698,6 +742,7 @@
     @media (max-width: 768px) {
       /* NAV */
       .nav-links, .nav-cta .btn-outline-cream { display: none; }
+      .nav-get-started { display: none !important; }
       .nav-hamburger { display: flex; }
 
       /* HERO */
@@ -805,7 +850,6 @@
     <a href="#team"            onclick="closeMobile()">Our Team</a>
     <a href="#why"             onclick="closeMobile()">Why Us</a>
     <a href="#contact"         onclick="closeMobile()">Contact</a>
-    <a href="#contact" onclick="closeMobile()" class="btn btn-gold" style="margin-top:8px;">Get Started</a>
   </div>
 
   <!-- NAVIGATION -->
@@ -825,7 +869,7 @@
             <li><a href="CAREERS.html" style="color:var(--gold);font-weight:700;">Careers</a></li>
         </ul>
         <div style="display:flex;align-items:center;gap:12px;">
-          <a href="#contact" class="btn btn-gold">Get Started</a>
+          <a href="#contact" class="btn btn-gold nav-get-started">Get Started</a>
           <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMobile()">
             <span></span><span></span><span></span>
           </button>
@@ -837,14 +881,16 @@
   <!-- HERO -->
   <section id="hero" aria-label="Hero">
     <div class="hero-bg"></div>
+    <div class="hero-orb1"></div>
+    <div class="hero-orb2"></div>
+    <div class="hero-orb3"></div>
     <div class="hero-glow"></div>
     <div class="hero-grain"></div>
-    <div class="hero-line"></div>
     <div class="container">
       <div class="hero-content">
         <div class="hero-tag"><div class="hero-dot"></div>Philippine-Based · Global Reach · 24/7 Available</div>
         <h1 class="hero-h1">Your Business,<br><em>Expertly Supported</em></h1>
-        <p class="hero-sub">Remote staffing, credit dispute processing, social media management, sales, graphics, and automation — handled by a dedicated team that treats your business like their own.</p>
+        <p class="hero-sub">Remote staffing for US businesses — dispute processing, social media, sales, and automation.</p>
         <div class="hero-ctas">
           <a href="#services" class="btn btn-gold">Explore Services</a>
           <a href="https://wa.me/639279444620" target="_blank" rel="noopener" class="btn btn-outline-cream">Book a Free Consultation</a>
@@ -918,7 +964,7 @@
       <div class="services-intro">
         <div class="services-intro-left">
           <div class="eyebrow">What We Do</div>
-          <h2 class="section-heading">Five Services.<br><em>One Reliable Team.</em></h2>
+          <h2 class="section-heading">Our <em>Services</em></h2>
         </div>
         <div class="services-intro-right">SouthGen Management Inc. provides a full suite of business support services delivered by trained virtual professionals. Whether you need a single specialist or an entire remote department, we scale with you.</div>
       </div>
@@ -926,38 +972,38 @@
         <div class="svc-card reveal">
           <div class="svc-icon">📋</div>
           <div class="svc-title">Credit Dispute Processing</div>
-          <div class="svc-desc">Expert dispute management and credit report resolution handled with precision. We work directly with bureaus, creditors, and clients to achieve accurate, compliant results.</div>
+          <div class="svc-desc">Bureau disputes, creditor letters, and credit report resolution — handled with precision.</div>
           <div class="svc-tags"><span class="tag-pill">Bureau Disputes</span><span class="tag-pill">Credit Repair</span><span class="tag-pill">Compliance</span></div>
           <a href="Credit_repair.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-family:var(--ff-body);font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);border-bottom:1.5px solid var(--gold-pale);padding-bottom:2px;transition:color 0.25s ease,border-color 0.25s ease;" onmouseover="this.style.color='var(--navy)';this.style.borderColor='var(--navy)';" onmouseout="this.style.color='var(--gold)';this.style.borderColor='var(--gold-pale)';">Hire a Credit Repair VA &#8594;</a>
         </div>
         <div class="svc-card reveal reveal-delay-1">
           <div class="svc-icon">🎧</div>
           <div class="svc-title">Customer Service</div>
-          <div class="svc-desc">Professional agents who represent your brand with warmth and precision — across live chat, email, and inbound phone support. Available in your timezone.</div>
+          <div class="svc-desc">Live chat, email, and inbound phone support in your timezone.</div>
           <div class="svc-tags"><span class="tag-pill">Live Chat</span><span class="tag-pill">Email Support</span><span class="tag-pill">Inbound Calls</span></div>
         </div>
         <div class="svc-card reveal reveal-delay-2">
           <div class="svc-icon">🎨</div>
           <div class="svc-title">Graphics / Website / Automation</div>
-          <div class="svc-desc">Creative design, web development, and workflow automation that saves hours every week. From brand identity to CRM integrations, we build what your business needs.</div>
+          <div class="svc-desc">Design, web development, and CRM automation — from brand identity to integrations.</div>
           <div class="svc-tags"><span class="tag-pill">Branding</span><span class="tag-pill">Web Design</span><span class="tag-pill">Automation</span></div>
         </div>
         <div class="svc-card reveal">
           <div class="svc-icon">📱</div>
           <div class="svc-title">Social Media Management &amp; Marketing</div>
-          <div class="svc-desc">Content strategy, daily posting, community management, and paid advertising across Facebook, Instagram, TikTok, and LinkedIn. We grow your audience and convert followers into clients.</div>
+          <div class="svc-desc">Daily posting, community management, and paid ads across Facebook, Instagram, TikTok, and LinkedIn.</div>
           <div class="svc-tags"><span class="tag-pill">Content Creation</span><span class="tag-pill">Scheduling</span><span class="tag-pill">Paid Ads</span><span class="tag-pill">Analytics</span></div>
         </div>
         <div class="svc-card reveal reveal-delay-1">
           <div class="svc-icon">📞</div>
           <div class="svc-title">Sales / Appointment Setting / Closer</div>
-          <div class="svc-desc">Dedicated setters and trained closers who qualify leads, book calls, and close deals on your behalf. We plug directly into your pipeline and CRM.</div>
+          <div class="svc-desc">Lead qualification, appointment setting, and closers who plug into your CRM.</div>
           <div class="svc-tags"><span class="tag-pill">Cold Outreach</span><span class="tag-pill">Appointment Setting</span><span class="tag-pill">Deal Closing</span></div>
         </div>
         <div class="svc-card reveal reveal-delay-2">
           <div class="svc-icon">🏫</div>
           <div class="svc-title">Skool Management</div>
-          <div class="svc-desc">Full-service management of your Skool community — keeping members engaged, supported, and active. We handle daily engagement, welcome sequences, and customer support so your community thrives around the clock.</div>
+          <div class="svc-desc">Engagement, welcome sequences, and support so your community thrives around the clock.</div>
           <div class="svc-tags"><span class="tag-pill">Community Engagement</span><span class="tag-pill">Customer Support</span><span class="tag-pill">Member Retention</span></div>
         </div>
       </div>
@@ -970,7 +1016,7 @@
       <div style="max-width:680px;">
         <div class="eyebrow">Virtual Office</div>
         <h2 class="section-heading">A Professional Address.<br><em>Zero Overhead.</em></h2>
-        <p class="section-sub" style="max-width:100%;">Located at SGM Virtual Office, Mabuhay IT Park, General Santos City — get all the prestige of a real business address without the cost of a physical office. Plans start at ₱999/month.</p>
+        <p class="section-sub" style="max-width:100%;">A professional business address at Mabuhay IT Park, General Santos City. Starting at ₱999/month.</p>
         <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:44px;">
           <div style="display:flex;gap:12px;align-items:center;font-size:14px;color:var(--charcoal);"><span style="width:36px;height:36px;border-radius:6px;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📍</span>Prestigious Business Address</div>
           <div style="display:flex;gap:12px;align-items:center;font-size:14px;color:var(--charcoal);"><span style="width:36px;height:36px;border-radius:6px;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📬</span>Mail Handling &amp; Forwarding</div>
@@ -994,7 +1040,7 @@
         <div class="about-content reveal reveal-delay-1">
           <div class="eyebrow">About Us</div>
           <h2 class="section-heading">Built on <em>Trust,</em><br>Driven by Results.</h2>
-          <p class="section-sub">Southgen Management Inc. is a Philippine-based Virtual Assistant Agency dedicated to delivering high-quality remote staffing, administrative support, and specialized business services to clients worldwide.</p>
+          <p class="section-sub">Philippine-based remote staffing for businesses worldwide.</p>
           <div class="value-list">
             <div class="value-item"><div class="value-dot"></div><div><div class="value-item-title">Integrity</div><div class="value-item-desc">We do the right thing even when no one is watching. Every task is handled with honesty and transparency.</div></div></div>
             <div class="value-item"><div class="value-dot"></div><div><div class="value-item-title">Accountability</div><div class="value-item-desc">We take full ownership of our actions, decisions, and results — no excuses, just solutions.</div></div></div>
@@ -1012,7 +1058,7 @@
       <div class="team-header">
         <div class="eyebrow">The People Behind the Work</div>
         <h2 class="section-heading reveal">Meet Our <em>Leadership Team</em></h2>
-        <p class="section-sub reveal">Our leaders bring deep expertise, a shared commitment to excellence, and a culture of accountability that flows through every project we deliver.</p>
+        <p class="section-sub reveal"></p>
       </div>
       <div class="team-grid">
 
@@ -1028,8 +1074,7 @@
             <div class="president-badge">⭐ President &amp; CEO</div>
             <div class="team-card-name">Janine Lopez</div>
             <div class="team-card-role">President &amp; Chief Executive Officer</div>
-            <p class="team-card-bio">With over a decade of experience in the BPO industry since 2013, Janine Angelie C. Lopez has built her career on excellence, adaptability, and leadership. From voice and non-voice operations to the credit repair industry, her journey reflects her commitment to continuous learning, operational efficiency, and delivering quality service.</p>
-            <p class="team-card-bio" style="margin-top:12px;">Through strong client relationships and a growth-oriented mindset, she transformed her experience into an entrepreneurial venture, founding SouthGen Management Inc. Today, she leads the company with a focus on strategic thinking, team development, problem-solving, client relationship management, and operational excellence.</p>
+            <p class="team-card-bio">10+ years in BPO — from voice operations to credit repair. Founder of SouthGen Management Inc., leading with strategic thinking, client relationships, and operational excellence.</p>
             <p class="team-card-bio" style="margin-top:12px; color:var(--gold); font-style:italic;">"My vision is to empower people, create opportunities, and provide reliable business solutions that help clients scale and succeed."</p>
           </div>
         </div>
@@ -1044,7 +1089,7 @@
           </div>
           <div class="team-card-name">Joryl Siodina</div>
           <div class="team-card-role">Chief Operations Officer</div>
-          <p class="team-card-bio">Oversees daily operations, team performance, and client delivery standards to ensure every project runs on time and to the highest standard.</p>
+          <p class="team-card-bio">Oversees daily operations and client delivery standards.</p>
         </div>
 
 
@@ -1058,7 +1103,7 @@
           </div>
           <div class="team-card-name">Reena Siodina</div>
           <div class="team-card-role">Chief Financial Officer</div>
-          <p class="team-card-bio">Manages SouthGen's financial strategy, budgeting, and fiscal health — ensuring the company's growth is built on a solid, sustainable foundation.</p>
+          <p class="team-card-bio">Manages financial strategy, budgeting, and fiscal health.</p>
         </div>
 
 
@@ -1072,7 +1117,7 @@
           </div>
           <div class="team-card-name">Ericka Baluarte</div>
           <div class="team-card-role">HR Manager</div>
-          <p class="team-card-bio">Champions the people behind SouthGen — from hiring top talent to fostering a culture of excellence, accountability, and belonging.</p>
+          <p class="team-card-bio">Leads hiring, culture, and team development.</p>
         </div>
 
         <!-- OPERATIONS MANAGER -->
@@ -1085,7 +1130,7 @@
           </div>
           <div class="team-card-name">Ciaryl Dawn Dalupan</div>
           <div class="team-card-role">Operations Manager</div>
-          <p class="team-card-bio">Keeps every workflow efficient, every deadline met, and every deliverable polished — the driving force behind SouthGen's operational excellence.</p>
+          <p class="team-card-bio">Keeps workflows efficient and every deliverable on time.</p>
         </div>
 
       </div>
@@ -1100,7 +1145,7 @@
         <div class="why-left">
           <div class="eyebrow">Why SouthGen</div>
           <h2 class="section-heading light">The Difference<br><em>Is in the Details.</em></h2>
-          <p class="section-sub light">We don't just fill seats. We find professionals who take ownership — and build systems around them to ensure consistent, high-quality results for every client.</p>
+          <p class="section-sub light"></p>
           <div class="why-features">
             <div class="why-feature reveal"><div class="why-feature-icon">🛡️</div><div><div class="why-feature-title">Strict Confidentiality Policy</div><div class="why-feature-desc">Every team member signs NDAs. Your data, credentials, and business processes stay protected — always.</div></div></div>
             <div class="why-feature reveal reveal-delay-1"><div class="why-feature-icon">⚡</div><div><div class="why-feature-title">Fast Onboarding</div><div class="why-feature-desc">Most clients are up and running within 48 hours. No lengthy contracts, no friction.</div></div></div>
@@ -1109,10 +1154,10 @@
           </div>
         </div>
         <div class="why-right">
-          <div class="why-stat-card reveal"><div class="why-stat-num">200+</div><div class="why-stat-label">Satisfied clients across the US, Australia, Canada &amp; UK</div></div>
-          <div class="why-stat-card reveal reveal-delay-1"><div class="why-stat-num">98%</div><div class="why-stat-label">Client retention rate — they stay because results speak</div></div>
-          <div class="why-stat-card reveal reveal-delay-2"><div class="why-stat-num">48h</div><div class="why-stat-label">Average time from inquiry to fully onboarded VA</div></div>
-          <div class="why-stat-card reveal reveal-delay-3"><div class="why-stat-num">24/7</div><div class="why-stat-label">Support coverage across all major timezones</div></div>
+          <div class="why-stat-card reveal"><div class="why-stat-num">200+</div><div class="why-stat-label">Clients across the US, Australia, Canada &amp; UK</div></div>
+          <div class="why-stat-card reveal reveal-delay-1"><div class="why-stat-num">98%</div><div class="why-stat-label">Client retention rate</div></div>
+          <div class="why-stat-card reveal reveal-delay-2"><div class="why-stat-num">48h</div><div class="why-stat-label">From inquiry to onboarded VA</div></div>
+          <div class="why-stat-card reveal reveal-delay-3"><div class="why-stat-num">24/7</div><div class="why-stat-label">Support across all timezones</div></div>
         </div>
       </div>
     </div>
@@ -1124,7 +1169,7 @@
       <div class="testimonials-header">
         <div class="eyebrow">Client Stories</div>
         <h2 class="section-heading reveal">What Our Clients <em>Say</em></h2>
-        <p class="section-sub reveal">Real feedback from businesses who trusted SouthGen with their operations.</p>
+        <p class="section-sub reveal"></p>
       </div>
       <div class="testimonials-grid">
         <div class="t-card reveal">
@@ -1152,7 +1197,7 @@
     <div class="container">
       <div class="cta-content">
         <h2 class="cta-h2 reveal">Ready to <em>Delegate</em><br>and Scale?</h2>
-        <p class="cta-sub reveal">Book a free 30-minute consultation and we'll match you with the right specialist within 48 hours. No commitment required.</p>
+        <p class="cta-sub reveal">No commitment required.</p>
         <div class="cta-btns reveal">
           <a href="https://wa.me/639279444620" target="_blank" rel="noopener" class="btn btn-gold">Book a Free Consultation</a>
           <a href="#services" class="btn btn-outline-cream">View All Services</a>
@@ -1168,7 +1213,7 @@
         <div class="contact-info reveal">
           <div class="eyebrow">Inquiry</div>
           <h2 class="section-heading">Send Us an<br><em>Inquiry</em></h2>
-          <p class="section-sub">Fill out the form and a member of our team will reach out within 24 hours to discuss your needs and recommend the right solution.</p>
+          <p class="section-sub">We'll reach out within 24 hours.</p>
           <div class="contact-details">
             <div class="contact-detail"><div class="contact-detail-icon">📧</div><div><div class="contact-detail-label">Email</div><div class="contact-detail-value">admin@southgensolutions.com</div></div></div>
             <div class="contact-detail"><div class="contact-detail-icon">📍</div><div><div class="contact-detail-label">Location</div><div class="contact-detail-value">General Santos City, Philippines · Serving Clients Worldwide</div></div></div>
