@@ -6,27 +6,27 @@ Multi-page website for SouthGen Management Inc., a Philippine-based BPO in Gener
 
 | File | Description |
 |------|-------------|
-| `southgen_website_v2.html` | **Main site** — Home page (hero, services, team, about, contact form) |
-| `southgen_virtual_office.html` | Virtual Office page — remote staffing details |
-| `southgen_careers.html` | Careers / Join Our Team page |
+| `HOMEPAGE.html` | **Main site** — Home page (hero, services, team, about, contact form) |
+| `Virtual_Office.html` | Virtual Office page — remote staffing details |
+| `CAREERS.html` | Careers / Join Our Team page |
+| `Credit_repair.html` | Credit Repair VA SEO landing page |
 
-> Rename `southgen_website_v2.html` → `index.html` when deploying so the root URL loads the home page automatically.
+> Rename `HOMEPAGE.html` → `index.html` when deploying so the root URL loads the home page automatically.
 
 ## Deployment (GitHub Pages)
 
 1. Create a GitHub repository (e.g. `southgen-website`).
-2. Upload all three HTML files — rename `southgen_website_v2.html` to `index.html`.
-3. Upload the `CNAME` file if using a custom domain (see below).
+2. Upload all four HTML files — rename `HOMEPAGE.html` to `index.html`.
+3. Upload the `CNAME` file (custom domain).
 4. Go to **Settings → Pages**, set source to `main` branch / root.
-5. Your site will be live at `https://<your-github-username>.github.io/southgen-website/`
-   or at your custom domain once DNS is configured.
+5. Your site will be live at `https://southgenmanagement.com` once DNS is configured.
 
 ## Custom Domain Setup
 
-1. Add `CNAME` file to the repo root containing your domain (e.g. `southgen.com.ph`).
+1. Add `CNAME` file to the repo root containing `southgenmanagement.com`.
 2. In your domain registrar (e.g. GoDaddy, Namecheap), add these DNS records:
 
-### Apex domain (southgen.com.ph)
+### Apex domain (southgenmanagement.com)
 ```
 Type: A   Name: @   Value: 185.199.108.153
 Type: A   Name: @   Value: 185.199.109.153
@@ -41,10 +41,21 @@ Type: CNAME   Name: www   Value: <your-github-username>.github.io
 
 DNS changes may take up to 48 hours to propagate.
 
-## Contact Form
+## Internal Links
 
-The contact form on the main site is wired to WhatsApp (+63 927 944 4620).  
-When a visitor submits the form, WhatsApp opens with a pre-filled message containing their inquiry details.
+All four pages link to each other — keep them in the **same folder** when deploying.
+
+| From | Links to |
+|------|----------|
+| HOMEPAGE | Virtual_Office, CAREERS, Credit_repair |
+| Virtual_Office | HOMEPAGE |
+| CAREERS | HOMEPAGE |
+| Credit_repair | HOMEPAGE |
+
+## Contact / Forms
+
+All forms and "Book a Free Consultation" buttons redirect to WhatsApp:
+`https://wa.me/639279444620` (+63 927 944 4620)
 
 ## Social Links
 
@@ -54,14 +65,9 @@ When a visitor submits the form, WhatsApp opens with a pre-filled message contai
 | Instagram | https://www.instagram.com/southgen.mgt/ |
 | LinkedIn | https://www.linkedin.com/company/southgen-management-inc |
 
-## WhatsApp CTA
-
-Both "Book a Free Consultation" buttons link to:  
-`https://wa.me/639279444620`
-
 ## Tech Notes
 
 - All images are **base64-embedded** — no external image hosting needed.
 - Fonts loaded from Google Fonts (internet connection required to render correctly).
 - No backend required — fully static HTML.
-- All three pages link to each other via relative `href` — keep them in the **same folder**.
+- All four pages must be in the **same folder** for internal links to work.
