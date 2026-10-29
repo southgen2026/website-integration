@@ -732,9 +732,13 @@
       .value-card { padding: 20px 16px; }
 
       /* TEAM */
-      .team-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
       .team-card.president { grid-column: span 2; grid-template-columns: 1fr; text-align: center; }
       .team-card.president .team-photo { border-radius: var(--r-md); }
+      /* Shrink non-CEO photo cards on mobile */
+      .team-card:not(.president) .team-photo { aspect-ratio: 2/3; }
+      .team-card:not(.president) .team-card-name { font-size: 14px; }
+      .team-card:not(.president) .team-card-role { font-size: 10px; }
 
       /* WHY US */
       .why-grid { grid-template-columns: 1fr; }
